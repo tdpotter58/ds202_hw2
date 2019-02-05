@@ -1,0 +1,98 @@
+---
+title: 'Homework #2'
+author: "Timothy Potter; tdpotter58"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This homework is about syntax and basic plotting functions in R, and is **due on Feb 1** before 11:59pm.
+
+You can use the RMarkDown file with these homework instructions as a template for your work. 
+Make sure to replace "Your Name" and "your_github_username" in the YAML with your name and Github username.
+
+**Submission instructions**: Create a folder named `ds202_hw2`, and name the RMarkDown file including your solutions `hw2.Rmd` under this folder. For submission, create a GitHub repository named `ds202_hw2` under your account, and push both `hw2.Rmd` and the knitted `hw2.html` to GitHub before the deadline. I will assume you use the same GitHub username as for your HW1 submission. The latest version of your homework appearing on GitHub before the deadline is graded. *It is crucial to follow the exact folder structure and file names*, so that your homework can be reproduced and graded by an automated script. Some questions will require the following answer format.
+
+## Example question and answer
+0\. What is the smallest positive odd integer? Storage it in a variable named `a0` and print it.
+
+**Example answer**:
+In the RMarkDown file, type in
+<pre><code>```{r}
+a0 <- 1
+a0
+```</code></pre>
+The knitted html file will show:
+```{r}
+a0 <- 1
+a0
+```
+
+
+##R Commands
+1. 
+```{r}
+cel <- c(-9, -23)
+cel
+```
+2.
+```{r}
+vec200 <- rep(c(0,1),200)
+vec200
+```
+3. 
+```{r}
+numPerfect <- 31
+numPerfect
+```
+
+
+##Cars and Mileage
+```{r}
+library(ggplot2)
+```
+
+1.
+The 3 most fuel-efficient cars are found by sorting the mpg dataset and then taking the top 3 values from that sorted set.
+```{r}
+mpg
+hwy <- mpg[order(-mpg$hwy),]
+top3 <- head(hwy, n = 3)
+top3
+```
+
+2.
+Just finding the sum of everytime compact appears and storing that in a variable
+```{r}
+numCompact = sum(mpg$class == "compact")
+numCompact
+```
+
+3.
+As the city mpg increases, so does the highway mpg. The reason so few points are visible is because most are repeated.
+```{r}
+qplot(hwy, cty, data = mpg)
+```
+
+4.
+Cars do not seem to be more fuel efficient in 2008 than they were in 1999. In fact, it would appear that cars have gotten less efficient over time,as supported by the summary statistics.
+```{r}
+cars1999 <- mpg[mpg$year == 1999,]
+cars1999 <- cars1999[order(-cars1999$hwy),]
+cars1999
+cars2008 <- mpg[mpg$year == 2008,]
+cars2008 <- cars2008[order(-cars2008$hwy),]
+cars2008
+
+mean(cars1999$hwy)
+mean(cars1999$cty)
+mean(cars2008$hwy)
+mean(cars2008$cty)
+median(cars1999$hwy)
+median(cars2008$hwy)
+qplot(hwy, cty, data = cars1999)
+qplot(hwy, cty, data = cars2008)
+```
